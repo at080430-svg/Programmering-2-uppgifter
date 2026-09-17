@@ -1,0 +1,722 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/at080430-svg/Programmering-2-uppgifter/blob/main/Kopia%20av%20arv%20%C3%B6vningar\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "G8QNIiJQgjaz"
+      },
+      "source": [
+        "# Arv (Inheritance)\n",
+        "### Programmering 2 — exempel och övningar\n",
+        "\n",
+        "Den här filen innehåller **10 exempel** kring klasserna `Djur`, `Hund` och `Katt`, och **10 övningar** där ni bygger samma sak med `Fordon`, `Bil` och `MC` istället.\n",
+        "\n",
+        "Varje kodcell är fristående och definierar allt den behöver — ni kan alltså köra cellerna i valfri ordning utan att något går sönder.\n",
+        "\n",
+        "**Så här jobbar ni:**\n",
+        "1. Läs textrutan innan varje exempel — kör sedan kodcellen för att se att det fungerar (Shift + Enter).\n",
+        "2. När ni kommer till en övning: läs uppgiften noga, skriv er kod i kodcellen under, och kör den.\n",
+        "3. Fastnar ni? Läs exemplet med SAMMA NUMMER igen — övningen bygger alltid på samma idé, bara med andra klasser.\n"
+      ],
+      "id": "G8QNIiJQgjaz"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Ff187llngja1"
+      },
+      "source": [
+        "---\n",
+        "## Del 1: Exempel\n",
+        "Varje exempel är fristående (definierar sina egna klasser från grunden)."
+      ],
+      "id": "Ff187llngja1"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "aUEGUumKgja2"
+      },
+      "source": [
+        "### Exempel 1 — Grundläggande arv\n",
+        "\n",
+        "Med **arv** kan en klass (subklass) återanvända attribut och metoder från en annan klass (superklass).\n",
+        "\n",
+        "Syntaxen är `class Subklass(Superklass):`. Om subklassen inte har något eget innehåll skriver man `pass`.\n",
+        "\n",
+        "Här ärver `Hund` från `Djur` utan att ändra något — och får ändå `__init__` och `namn` helt gratis."
+      ],
+      "id": "aUEGUumKgja2"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "lgI4A3kugja2"
+      },
+      "outputs": [],
+      "source": [
+        "class Djur:\n",
+        "    def __init__(self, namn):\n",
+        "        self.namn = namn\n",
+        "\n",
+        "class Hund(Djur):   # Hund ärver från Djur\n",
+        "    pass\n",
+        "\n",
+        "nero = Hund(\"Nero\")   # __init__ kommer från Djur\n",
+        "print(nero.namn)\n"
+      ],
+      "id": "lgI4A3kugja2"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "N_TLc-VQgja4"
+      },
+      "source": [
+        "### Exempel 2 — Ärvda metoder fungerar automatiskt\n",
+        "\n",
+        "En subklass får inte bara attribut, utan även metoder från superklassen — helt utan att man behöver skriva om dem."
+      ],
+      "id": "N_TLc-VQgja4"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "nM9UOYcpgja4"
+      },
+      "outputs": [],
+      "source": [
+        "class Djur:\n",
+        "    def __init__(self, namn):\n",
+        "        self.namn = namn\n",
+        "\n",
+        "    def ljud(self):\n",
+        "        print(self.namn + \" gör ett ljud.\")\n",
+        "\n",
+        "class Hund(Djur):\n",
+        "    pass\n",
+        "\n",
+        "nero = Hund(\"Nero\")\n",
+        "nero.ljud()   # ljud() är ärvd från Djur\n"
+      ],
+      "id": "nM9UOYcpgja4"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "mOa8Hw_ngja4"
+      },
+      "source": [
+        "### Exempel 3 — Override: skriva över en metod\n",
+        "\n",
+        "Om subklassen definierar en metod med **samma namn** som en metod i superklassen, används subklassens version istället. Det kallas att man **overridar** metoden."
+      ],
+      "id": "mOa8Hw_ngja4"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Hu_8K2lqgja5"
+      },
+      "outputs": [],
+      "source": [
+        "class Djur:\n",
+        "    def __init__(self, namn):\n",
+        "        self.namn = namn\n",
+        "\n",
+        "    def ljud(self):\n",
+        "        print(self.namn + \" gör ett ljud.\")\n",
+        "\n",
+        "class Hund(Djur):\n",
+        "    def ljud(self):              # skriver över Djurs ljud()\n",
+        "        print(self.namn + \" säger: Voff!\")\n",
+        "\n",
+        "nero = Hund(\"Nero\")\n",
+        "nero.ljud()   # Nero säger: Voff!\n"
+      ],
+      "id": "Hu_8K2lqgja5"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "ehhUPg1jgja5"
+      },
+      "source": [
+        "### Exempel 4 — `super().__init__()`\n",
+        "\n",
+        "Om subklassen behöver egna attribut UTÖVER de ärvda, kan man använda `super().__init__(...)` för att köra superklassens konstruktor, och sedan lägga till sina egna rader."
+      ],
+      "id": "ehhUPg1jgja5"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "2HYND5Q0gja5"
+      },
+      "outputs": [],
+      "source": [
+        "class Djur:\n",
+        "    def __init__(self, namn):\n",
+        "        self.namn = namn\n",
+        "\n",
+        "class Hund(Djur):\n",
+        "    def __init__(self, namn, ras):\n",
+        "        super().__init__(namn)   # kör Djurs __init__\n",
+        "        self.ras = ras            # eget, nytt attribut\n",
+        "\n",
+        "nero = Hund(\"Nero\", \"Labrador\")\n",
+        "print(nero.namn, nero.ras)\n"
+      ],
+      "id": "2HYND5Q0gja5"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "cru5KIL1gja6"
+      },
+      "source": [
+        "### Exempel 5 — Nya metoder som bara finns i subklassen\n",
+        "\n",
+        "Subklassen kan även ha metoder som superklassen inte alls har. Ett rent `Djur`-objekt kan inte hämta boll — bara `Hund`-objekt kan det."
+      ],
+      "id": "cru5KIL1gja6"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "PBB7xL7Ugja6"
+      },
+      "outputs": [],
+      "source": [
+        "class Djur:\n",
+        "    def __init__(self, namn):\n",
+        "        self.namn = namn\n",
+        "\n",
+        "class Hund(Djur):\n",
+        "    def __init__(self, namn, ras):\n",
+        "        super().__init__(namn)\n",
+        "        self.ras = ras\n",
+        "\n",
+        "    def hamta_boll(self):\n",
+        "        print(self.namn + \" hämtar bollen!\")\n",
+        "\n",
+        "nero = Hund(\"Nero\", \"Labrador\")\n",
+        "nero.hamta_boll()\n"
+      ],
+      "id": "PBB7xL7Ugja6"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "bLWXDk2egja6"
+      },
+      "source": [
+        "### Exempel 6 — Flera subklasser och polymorfism\n",
+        "\n",
+        "Man kan ha flera subklasser till samma superklass. Om alla overridar samma metodnamn kan man loopa igenom en lista med blandade objekt och anropa samma metodnamn — varje objekt svarar på sitt eget sätt. Det kallas **polymorfism**."
+      ],
+      "id": "bLWXDk2egja6"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "25RX_QZ9gja7"
+      },
+      "outputs": [],
+      "source": [
+        "class Djur:\n",
+        "    def __init__(self, namn):\n",
+        "        self.namn = namn\n",
+        "\n",
+        "    def ljud(self):\n",
+        "        print(self.namn + \" gör ett ljud.\")\n",
+        "\n",
+        "class Hund(Djur):\n",
+        "    def ljud(self):\n",
+        "        print(self.namn + \" säger: Voff!\")\n",
+        "\n",
+        "class Katt(Djur):\n",
+        "    def ljud(self):\n",
+        "        print(self.namn + \" säger: Miau!\")\n",
+        "\n",
+        "djur_lista = [Hund(\"Nero\"), Katt(\"Molly\"), Djur(\"Något djur\")]\n",
+        "\n",
+        "for d in djur_lista:\n",
+        "    d.ljud()\n"
+      ],
+      "id": "25RX_QZ9gja7"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Ku4eJC0rgja7"
+      },
+      "source": [
+        "### Exempel 7 — `isinstance()`\n",
+        "\n",
+        "`isinstance(objekt, Klass)` kollar om ett objekt tillhör en viss klass — eller en klass som objektets klass ärver från. Ett `Hund`-objekt räknas alltså SOM ett `Djur` också."
+      ],
+      "id": "Ku4eJC0rgja7"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "ULFiL6jVgja7"
+      },
+      "outputs": [],
+      "source": [
+        "class Djur:\n",
+        "    def __init__(self, namn):\n",
+        "        self.namn = namn\n",
+        "\n",
+        "class Hund(Djur):\n",
+        "    pass\n",
+        "\n",
+        "class Katt(Djur):\n",
+        "    pass\n",
+        "\n",
+        "nero = Hund(\"Nero\")\n",
+        "\n",
+        "print(isinstance(nero, Hund))   # True\n",
+        "print(isinstance(nero, Djur))   # True — Hund ÄR ETT Djur\n",
+        "print(isinstance(nero, Katt))   # False\n"
+      ],
+      "id": "ULFiL6jVgja7"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "cJzBfs4rgja7"
+      },
+      "source": [
+        "### Exempel 8 — Anropa superklassens metod med `super()`\n",
+        "\n",
+        "`super()` kan också användas för att anropa superklassens version av VILKEN metod som helst, inte bara `__init__`. Här bygger `Hund` vidare på `Djur`s `beskrivning()` istället för att skriva om allt från grunden."
+      ],
+      "id": "cJzBfs4rgja7"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "ZRh7XwUQgja7"
+      },
+      "outputs": [],
+      "source": [
+        "class Djur:\n",
+        "    def __init__(self, namn):\n",
+        "        self.namn = namn\n",
+        "\n",
+        "    def beskrivning(self):\n",
+        "        print(self.namn + \" är ett djur.\")\n",
+        "\n",
+        "class Hund(Djur):\n",
+        "    def beskrivning(self):\n",
+        "        super().beskrivning()          # kör Djurs beskrivning() först\n",
+        "        print(\"Dessutom är det en hund.\")\n",
+        "\n",
+        "nero = Hund(\"Nero\")\n",
+        "nero.beskrivning()\n"
+      ],
+      "id": "ZRh7XwUQgja7"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "s3Od8XWRgja8"
+      },
+      "source": [
+        "### Exempel 9 — Klassattribut ärvs också\n",
+        "\n",
+        "Klassattribut (som delas av alla objekt) fungerar likadant över arv — en subklass kommer åt och kan uppdatera samma klassattribut som superklassen har."
+      ],
+      "id": "s3Od8XWRgja8"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "WEZcC4wdgja8"
+      },
+      "outputs": [],
+      "source": [
+        "class Djur:\n",
+        "    antal_djur = 0   # klassattribut\n",
+        "\n",
+        "    def __init__(self, namn):\n",
+        "        self.namn = namn\n",
+        "        Djur.antal_djur += 1\n",
+        "\n",
+        "class Hund(Djur):\n",
+        "    pass\n",
+        "\n",
+        "d1 = Djur(\"Något djur\")\n",
+        "h1 = Hund(\"Nero\")\n",
+        "h2 = Hund(\"Buster\")\n",
+        "\n",
+        "print(\"Antal djur totalt:\", Djur.antal_djur)\n"
+      ],
+      "id": "WEZcC4wdgja8"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "xuFo_Zyzgja8"
+      },
+      "source": [
+        "### Exempel 10 — Flernivå-arv\n",
+        "\n",
+        "En subklass kan i sin tur vara superklass åt en annan klass — en hel kedja av arv. `Valp` ärver från `Hund`, som i sin tur ärver från `Djur`. `Valp` får då med sig allt från BÅDA."
+      ],
+      "id": "xuFo_Zyzgja8"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "RUfrcEkSgja8"
+      },
+      "outputs": [],
+      "source": [
+        "class Djur:\n",
+        "    def __init__(self, namn):\n",
+        "        self.namn = namn\n",
+        "\n",
+        "    def ljud(self):\n",
+        "        print(self.namn + \" gör ett ljud.\")\n",
+        "\n",
+        "class Hund(Djur):\n",
+        "    def __init__(self, namn, ras):\n",
+        "        super().__init__(namn)\n",
+        "        self.ras = ras\n",
+        "\n",
+        "    def ljud(self):\n",
+        "        print(self.namn + \" säger: Voff!\")\n",
+        "\n",
+        "    def hamta_boll(self):\n",
+        "        print(self.namn + \" hämtar bollen!\")\n",
+        "\n",
+        "class Valp(Hund):\n",
+        "    pass\n",
+        "\n",
+        "buster = Valp(\"Buster\", \"Beagle\")\n",
+        "\n",
+        "buster.ljud()          # ärvd via Hund\n",
+        "buster.hamta_boll()    # ärvd via Hund\n",
+        "print(buster.namn)      # ärvd via Djur (genom Hund)\n"
+      ],
+      "id": "RUfrcEkSgja8"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "DLuNrhnogja9"
+      },
+      "source": [
+        "---\n",
+        "## Del 2: Övningar\n",
+        "Varje övning bygger på exemplet med samma nummer ovan, men med `Fordon`, `Bil` och `MC` istället för `Djur`, `Hund` och `Katt`. Skriv fristående kod i varje cell — definiera de klasser övningen behöver."
+      ],
+      "id": "DLuNrhnogja9"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "qB9KQOh4gja9"
+      },
+      "source": [
+        "### Övning 1 — Grundläggande arv\n",
+        "\n",
+        "Skapa en klass `Fordon` med attributet `namn` (konstruktor med `__init__`).\n",
+        "\n",
+        "Skapa sedan en klass `Bil` som ärver från `Fordon` utan att lägga till något eget (`pass`).\n",
+        "\n",
+        "Skapa ett `Bil`-objekt och skriv ut dess `namn`."
+      ],
+      "id": "qB9KQOh4gja9"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "cDvHOVergja9"
+      },
+      "outputs": [],
+      "source": [
+        "# Skriv din kod här\n"
+      ],
+      "id": "cDvHOVergja9"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "lAIeSPuWgja9"
+      },
+      "source": [
+        "### Övning 2 — Ärvda metoder\n",
+        "\n",
+        "Skapa klassen `Fordon` med attributet `namn` och en metod `beskrivning()` som skriver ut `\"<namn> är ett fordon.\"`\n",
+        "\n",
+        "Skapa en klass `Bil(Fordon)` utan eget innehåll (`pass`), och ett `Bil`-objekt. Anropa `beskrivning()` — den ska fungera trots att `Bil` inte definierar den själv."
+      ],
+      "id": "lAIeSPuWgja9"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "WgwdUgafgja9"
+      },
+      "outputs": [],
+      "source": [
+        "# Skriv din kod här\n"
+      ],
+      "id": "WgwdUgafgja9"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "2ENDQS7Cgja9"
+      },
+      "source": [
+        "### Övning 3 — Override\n",
+        "\n",
+        "Skapa `Fordon` (som i övning 2). Skapa `Bil(Fordon)` och skriv över `beskrivning()` så den istället skriver ut `\"<namn> är en bil.\"`\n",
+        "\n",
+        "Skapa ett `Bil`-objekt och anropa `beskrivning()` för att kontrollera att den nya versionen används."
+      ],
+      "id": "2ENDQS7Cgja9"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "khlHKk_Bgja9"
+      },
+      "outputs": [],
+      "source": [
+        "# Skriv din kod här\n"
+      ],
+      "id": "khlHKk_Bgja9"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "ZCita1KZgja-"
+      },
+      "source": [
+        "### Övning 4 — `super().__init__()`\n",
+        "\n",
+        "Skapa `Fordon` med attributet `namn`. Ge `Bil` en egen konstruktor som tar emot `namn` och `antal_hjul`. Använd `super().__init__(namn)` för att återanvända `Fordon`s konstruktor, och spara sedan `antal_hjul` som ett eget attribut.\n",
+        "\n",
+        "Skapa ett `Bil`-objekt och skriv ut båda attributen."
+      ],
+      "id": "ZCita1KZgja-"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Bz1qdR0Xgja-"
+      },
+      "outputs": [],
+      "source": [
+        "# Skriv din kod här\n"
+      ],
+      "id": "Bz1qdR0Xgja-"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "4WY2Ifaogja-"
+      },
+      "source": [
+        "### Övning 5 — Ny metod i subklassen\n",
+        "\n",
+        "Skapa `Fordon` och `Bil` (som i övning 4). Lägg till en metod `tanka()` i `Bil` som skriver ut `\"<namn> tankas.\"` — en metod som bara `Bil` har, inte `Fordon`.\n",
+        "\n",
+        "Skapa ett `Bil`-objekt och anropa den nya metoden."
+      ],
+      "id": "4WY2Ifaogja-"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "jBQkLhoHgja-"
+      },
+      "outputs": [],
+      "source": [
+        "# Skriv din kod här\n"
+      ],
+      "id": "jBQkLhoHgja-"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "23Cq-vCXgja-"
+      },
+      "source": [
+        "### Övning 6 — Flera subklasser och polymorfism\n",
+        "\n",
+        "Skapa `Fordon` med `namn` och `beskrivning()`. Skapa `Bil(Fordon)` som overridar `beskrivning()` till `\"<namn> är en bil.\"`, och `MC(Fordon)` som overridar den till `\"<namn> är en motorcykel.\"`\n",
+        "\n",
+        "Skapa en lista med minst en `Bil`, en `MC` och ett vanligt `Fordon`-objekt. Loopa igenom listan och anropa `beskrivning()` på varje."
+      ],
+      "id": "23Cq-vCXgja-"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "hrqoZe1Ygja-"
+      },
+      "outputs": [],
+      "source": [
+        "# Skriv din kod här\n"
+      ],
+      "id": "hrqoZe1Ygja-"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "F5j2XoDagja-"
+      },
+      "source": [
+        "### Övning 7 — `isinstance()`\n",
+        "\n",
+        "Skapa `Fordon`, `Bil(Fordon)` och `MC(Fordon)` (utan extra innehåll räcker, `pass`). Skapa ett `Bil`-objekt. Kontrollera med `isinstance()`:\n",
+        "- om det är en `Bil`\n",
+        "- om det är ett `Fordon`\n",
+        "- om det är en `MC`\n",
+        "\n",
+        "Skriv ut alla tre resultaten."
+      ],
+      "id": "F5j2XoDagja-"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "KVSpx3k4gja_"
+      },
+      "outputs": [],
+      "source": [
+        "# Skriv din kod här\n"
+      ],
+      "id": "KVSpx3k4gja_"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "l99Wik_zgja_"
+      },
+      "source": [
+        "### Övning 8 — Anropa superklassens metod med `super()`\n",
+        "\n",
+        "Skapa `Fordon` med `namn` och `beskrivning()` (som skriver `\"<namn> är ett fordon.\"`). Skapa `Bil(Fordon)` med egen konstruktor (`namn`, `antal_hjul`, via `super().__init__`), där `beskrivning()` FÖRST anropar `super().beskrivning()`, och sedan skriver ut en extra rad: `\"Dessutom har den <antal_hjul> hjul.\"`"
+      ],
+      "id": "l99Wik_zgja_"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "esR31FLWgja_"
+      },
+      "outputs": [],
+      "source": [
+        "# Skriv din kod här\n"
+      ],
+      "id": "esR31FLWgja_"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "LQE6sLEZgja_"
+      },
+      "source": [
+        "### Övning 9 — Klassattribut ärvs också\n",
+        "\n",
+        "Skapa `Fordon` med ett klassattribut `antal_fordon`, som räknas upp med 1 varje gång ett nytt objekt (av `Fordon` ELLER någon av dess subklasser) skapas.\n",
+        "\n",
+        "Skapa `Bil(Fordon)` och `MC(Fordon)` (utan extra innehåll). Skapa några `Bil`- och `MC`-objekt, och skriv sedan ut `Fordon.antal_fordon`."
+      ],
+      "id": "LQE6sLEZgja_"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "ozYtoKxjgja_"
+      },
+      "outputs": [],
+      "source": [
+        "# Skriv din kod här\n"
+      ],
+      "id": "ozYtoKxjgja_"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "xf7MOzstgjbA"
+      },
+      "source": [
+        "### Övning 10 — Flernivå-arv\n",
+        "\n",
+        "Skapa `Fordon` (namn, `beskrivning()`) och `Bil(Fordon)` med egen konstruktor (`namn`, `antal_hjul`) och en metod `tanka()`.\n",
+        "\n",
+        "Skapa sedan en klass `Sportbil` som ärver från `Bil` utan eget innehåll (`pass`).\n",
+        "\n",
+        "Skapa ett `Sportbil`-objekt och anropa både `tanka()` (ärvd via `Bil`) och `beskrivning()` (ärvd via `Fordon`)."
+      ],
+      "id": "xf7MOzstgjbA"
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "75gVDEMVgjbA"
+      },
+      "outputs": [],
+      "source": [
+        "# Skriv din kod här\n"
+      ],
+      "id": "75gVDEMVgjbA"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python",
+      "version": "3.10"
+    },
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
